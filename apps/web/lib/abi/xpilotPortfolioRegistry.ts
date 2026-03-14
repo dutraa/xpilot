@@ -1,0 +1,55 @@
+export const XPILOT_PORTFOLIO_REGISTRY_ABI = [
+  {
+    type: "function",
+    name: "createPortfolio",
+    inputs: [
+      { name: "prompt", type: "string", internalType: "string" },
+      { name: "strategy", type: "string", internalType: "string" },
+      { name: "risk", type: "string", internalType: "string" },
+      { name: "assets", type: "string[]", internalType: "string[]" },
+      { name: "weights", type: "uint256[]", internalType: "uint256[]" },
+    ],
+    outputs: [{ name: "portfolioId", type: "uint256", internalType: "uint256" }],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "getPortfolio",
+    inputs: [{ name: "portfolioId", type: "uint256", internalType: "uint256" }],
+    outputs: [
+      { name: "owner", type: "address", internalType: "address" },
+      { name: "prompt", type: "string", internalType: "string" },
+      { name: "strategy", type: "string", internalType: "string" },
+      { name: "risk", type: "string", internalType: "string" },
+      { name: "assets", type: "string[]", internalType: "string[]" },
+      { name: "weights", type: "uint256[]", internalType: "uint256[]" },
+      { name: "createdAt", type: "uint256", internalType: "uint256" },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getPortfolioIdsByOwner",
+    inputs: [{ name: "owner", type: "address", internalType: "address" }],
+    outputs: [{ name: "", type: "uint256[]", internalType: "uint256[]" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "nextPortfolioId",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+    stateMutability: "view",
+  },
+  {
+    type: "event",
+    name: "PortfolioCreated",
+    inputs: [
+      { name: "portfolioId", type: "uint256", indexed: true, internalType: "uint256" },
+      { name: "owner", type: "address", indexed: true, internalType: "address" },
+      { name: "strategy", type: "string", indexed: false, internalType: "string" },
+      { name: "risk", type: "string", indexed: false, internalType: "string" },
+    ],
+    anonymous: false,
+  },
+] as const;

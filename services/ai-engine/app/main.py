@@ -1,25 +1,32 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
-from typing import Literal
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from .portfolio_engine import build_portfolio
 
-from .strategy import generate_recommendation
+app = FastAPI()
 
-app = FastAPI(title="xPilot AI Engine", version="0.1.0")
-
-RiskLevel = Literal["low", "moderate", "high"]
-
-
-class RecommendRequest(BaseModel):
-    prompt: str = Field(..., min_length=5)
-    amount: float = Field(..., gt=0)
-    risk: RiskLevel = "moderate"
-
-
-@app.get("/health")
-def health() -> dict:
-    return {"ok": True, "service": "xpilot-ai-engine"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://100.118.32.16:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-@app.post("/recommend")
-def recommend(req: RecommendRequest) -> dict:
-    return generate_recommendation(req.prompt, req.amount, req.risk)
+class PortfolioRequest(BaseModel):
+    prompt: str
+    risk: str = "medium"
+
+
+@app.post("/generate-portfolio")
+def generate_portfolio(req: PortfolioRequest):
+    portfolio = build_portfolio(req.prompt, req.risk)
+
+    return {
+        "status": "success",
+        "portfolio": portfolio
+    }
