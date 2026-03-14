@@ -1,148 +1,238 @@
 # xPilot
 
-> AI Advisor for Tokenized Stocks
+xPilot is an AI-assisted portfolio strategy generator that converts
+natural language investment prompts into structured portfolio
+allocations and stores them onchain for transparency and verification.
 
-xPilot is a hackathon starter project for an **AI advisor** that turns natural-language investing prompts into tokenized-stock portfolio recommendations using **xStocks-style assets**.
+The system demonstrates how AI-driven financial agents can generate
+investment strategies whose outputs are permanently recorded on a
+blockchain.
 
-For v1, xPilot is intentionally designed as a **non-custodial advisor**:
-- the AI suggests allocations and rebalance actions
-- the user keeps control of funds in their own wallet
-- the app stores strategy metadata and emits recommendation events onchain
-- execution is **simulated first** for hackathon reliability
+Users can generate a portfolio, inspect the reasoning behind the
+allocation, and save the result onchain as a verifiable strategy.
 
-## Locked v1 Scope
+------------------------------------------------------------------------
 
-- **AI Advisor model** (no custody)
-- **Ethereum Sepolia**
-- **Next.js + Tailwind frontend**
-- **FastAPI AI service**
-- **Foundry contracts**
-- **Simulated execution layer**
-- **Future-ready for multi-agent expansion**
+## Overview
 
-## Core User Flow
+xPilot explores a simple question:
 
-1. Connect wallet
-2. Enter prompt like:
-   - `Invest $1,000 into AI companies with moderate risk`
-3. AI generates a portfolio recommendation
-4. User saves the portfolio profile onchain
-5. xPilot shows drift + rebalance suggestions
-6. User approves any future trade actions from their own wallet
+Can AI-generated investment strategies be made transparent and auditable
+by storing their outputs onchain?
 
-## Repo Structure
+The application allows users to:
 
-```text
-xpilot-starter/
-├─ apps/
-│  └─ web/                  # Next.js app router frontend
-├─ services/
-│  └─ ai-engine/            # FastAPI strategy engine
-├─ packages/
-│  └─ contracts/            # Foundry contracts
-├─ data/                    # Mock xStocks universe + demo data
-├─ docs/                    # Architecture + roadmap notes
-├─ .env.example
-└─ README.md
-```
+1.  Enter a natural language investment prompt
+2.  Receive an AI-generated portfolio allocation
+3.  Review the reasoning behind the allocation
+4.  Save the strategy onchain
+5.  Reload saved strategies from the blockchain
 
-## Quick Start
+The result is a minimal prototype of a verifiable AI financial agent.
 
-### 1) Frontend
+------------------------------------------------------------------------
 
-```bash
-cd apps/web
-npm install
-npm run dev
-```
+## Core Features
 
-### 2) AI Service
+### AI Portfolio Generation
 
-```bash
+Users can describe an investment strategy using natural language.\
+The AI engine converts the prompt into a portfolio allocation with
+weighted assets.
+
+Example prompt:
+
+Build a portfolio focused on leading AI companies.
+
+### Agent Reasoning
+
+Each generated portfolio includes an explanation describing why the AI
+selected specific assets and allocations.
+
+This provides transparency into the decision-making process.
+
+### Onchain Portfolio Storage
+
+Generated portfolios can be saved to a smart contract.
+
+Once written to the blockchain, the portfolio allocation becomes a
+permanent and verifiable record.
+
+### Portfolio History
+
+Previously saved portfolios can be retrieved from the blockchain and
+displayed in the application.
+
+### Autopilot Advisor
+
+The interface includes an Autopilot Recommendation panel which proposes:
+
+-   portfolio monitoring cadence
+-   allocation drift thresholds
+-   suggested management actions
+-   risk guardrails
+
+This demonstrates how AI agents could guide portfolio maintenance over
+time.
+
+------------------------------------------------------------------------
+
+## System Architecture
+
+Frontend (Next.js)\
+Handles user prompts, portfolio display, and onchain interactions.
+
+AI Engine (FastAPI)\
+Processes prompts and generates portfolio allocations.
+
+Smart Contract (Solidity)\
+Stores portfolio strategies onchain.
+
+Local Blockchain (Anvil)\
+Provides the development chain used for testing contract interactions.
+
+------------------------------------------------------------------------
+
+## Technology Stack
+
+Frontend
+
+-   Next.js
+-   React
+-   TailwindCSS
+
+Backend
+
+-   Python
+-   FastAPI
+
+Blockchain
+
+-   Solidity
+-   Foundry
+-   Anvil
+
+Contract interaction
+
+-   viem
+
+------------------------------------------------------------------------
+
+## Repository Structure
+
+xpilot/
+
+apps/\
+    web/\
+        Next.js frontend application
+
+services/\
+    ai-engine/\
+        FastAPI service that generates portfolio strategies
+
+contracts/\
+    Solidity smart contracts
+
+components/\
+    React UI components including:
+
+-   PortfolioCard
+-   PromptBox
+-   PromptPresets
+-   SavedPortfolioHistory
+-   AutopilotPanel
+
+------------------------------------------------------------------------
+
+## Running the Project
+
+### 1. Start the local blockchain
+
+anvil
+
+### 2. Start the AI engine
+
 cd services/ai-engine
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
 
-### 3) Contracts
+source venv/bin/activate
 
-```bash
-cd packages/contracts
-forge build
-forge test
-```
+uvicorn app.main:app --host 0.0.0.0 --reload --port 8000
 
-## Environment
+### 3. Start the frontend
 
-Copy the root env template:
+cd apps/web
 
-```bash
-cp .env.example .env
-```
+npm install
 
-Then fill in values as needed.
+npm run dev
 
-## Current MVP Features in This Starter
+### 4. Open the application
 
-- landing page shell
-- prompt form UI
-- mock portfolio generation flow
-- dashboard shell
-- FastAPI endpoint for recommendation generation
-- rules-based recommendation engine
-- Foundry contract skeleton for portfolio profiles
-- mock data for xStocks universe and sample portfolios
+http://localhost:3000
 
-## Phase Plan
+------------------------------------------------------------------------
 
-### Phase 0 — Foundation
-- repo scaffold
-- README
-- mock data
-- UI shell
-- contract skeleton
+## Example Workflow
 
-### Phase 1 — Prompt → Portfolio
-- prompt input
-- risk selector
-- AI recommendation endpoint
-- proposal card
+User prompt:
 
-### Phase 2 — Onchain Strategy Profile
-- save portfolio profile onchain
-- emit portfolio created events
-- index saved strategies in UI
+Invest in leading AI companies
 
-### Phase 3 — Rebalance Suggestions
-- drift detection
-- rationale engine
-- execution simulation log
+AI generated allocation:
 
-### Phase 4 — Polish
-- cleaner UI
-- better prompts
-- demo mode
-- submission assets
+NVIDIA 30%\
+Microsoft 25%\
+Alphabet 20%\
+Amazon 15%\
+Meta 10%
 
-## Suggested Demo Prompt
+Save to blockchain:
 
-`Invest $1,000 into AI leaders with moderate risk.`
+portfolioId: 0\
+transactionHash: 0x...\
+blockNumber: 2
 
-Expected sample output:
-- NVDAx 35%
-- MSFTx 25%
-- METAx 20%
-- GOOGLx 20%
+Reload from chain:
 
-## Future Expansion
+GET /api/get-portfolio/0
 
-- multi-agent strategy voting
-- bounded auto-approval flows
-- real execution adapters
-- strategy marketplace
+------------------------------------------------------------------------
 
-## Pitch Line
+## Why Store AI Strategies Onchain
 
-**xStocks put equities onchain. xPilot makes them autonomous.**
+AI systems will increasingly generate financial strategies.
+
+Recording those outputs onchain enables:
+
+-   verifiable AI decisions
+-   transparent strategy history
+-   reproducible allocations
+-   auditable financial agents
+
+xPilot explores how AI-generated strategies can be paired with
+blockchain infrastructure to provide transparency and accountability.
+
+------------------------------------------------------------------------
+
+## Current MVP Scope
+
+The current prototype supports:
+
+-   natural language portfolio generation
+-   AI reasoning display
+-   onchain portfolio storage
+-   portfolio history retrieval
+-   autopilot recommendation panel
+
+Future iterations may explore:
+
+-   wallet integration
+-   live market data feeds
+-   automated portfolio rebalancing
+-   multi-chain support
+
+------------------------------------------------------------------------
+
+## License
+
+MIT
