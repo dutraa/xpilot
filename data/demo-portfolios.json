@@ -1,0 +1,22 @@
+[
+  {
+    "name": "AI Growth",
+    "risk": "moderate",
+    "assets": [
+      {"symbol": "NVDAx", "weight": 35},
+      {"symbol": "MSFTx", "weight": 25},
+      {"symbol": "METAx", "weight": 20},
+      {"symbol": "GOOGLx", "weight": 20}
+    ]
+  },
+  {
+    "name": "Balanced Blue Chips",
+    "risk": "low",
+    "assets": [
+      {"symbol": "AAPLx", "weight": 25},
+      {"symbol": "MSFTx", "weight": 25},
+      {"symbol": "AMZNx", "weight": 20},
+      {"symbol": "SPYx", "weight": 30}
+    ]
+  }
+]

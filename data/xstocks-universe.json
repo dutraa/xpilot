@@ -1,0 +1,10 @@
+[
+  {"symbol": "AAPLx", "name": "Apple", "sector": "Technology", "themeTags": ["blue-chip", "consumer-tech"]},
+  {"symbol": "NVDAx", "name": "NVIDIA", "sector": "Technology", "themeTags": ["ai", "chips", "growth"]},
+  {"symbol": "MSFTx", "name": "Microsoft", "sector": "Technology", "themeTags": ["ai", "cloud", "blue-chip"]},
+  {"symbol": "GOOGLx", "name": "Alphabet", "sector": "Technology", "themeTags": ["ai", "ads", "platform"]},
+  {"symbol": "METAx", "name": "Meta", "sector": "Technology", "themeTags": ["ai", "platform", "growth"]},
+  {"symbol": "TSLAx", "name": "Tesla", "sector": "Automotive", "themeTags": ["ev", "growth", "volatility"]},
+  {"symbol": "AMZNx", "name": "Amazon", "sector": "Consumer", "themeTags": ["cloud", "platform", "large-cap"]},
+  {"symbol": "SPYx", "name": "S&P 500 ETF", "sector": "ETF", "themeTags": ["index", "diversified", "defensive"]}
+]
